@@ -12,9 +12,6 @@ export class NewsPageSmartComponent implements OnInit {
   articles$: Observable<Article[]>;
 
   constructor(private _articleService: ArticleService) {
-    // this._activatedRoute.data.subscribe(({ articles }) => {
-    //   this.articles = articles;
-    // })
   }
 
   ngOnInit(): void {

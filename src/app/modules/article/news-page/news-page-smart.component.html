@@ -1,1 +1,6 @@
-<app-news-page [articles]="articles$ | async"></app-news-page>
+<div>
+    <div class="d-flex justify-content-center">
+        <app-search-smart></app-search-smart>
+    </div>
+    <app-news-page [articles]="articles$ | async"></app-news-page>
+</div>

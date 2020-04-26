@@ -1,0 +1,5 @@
+<mat-form-field appearance="outline">
+    <mat-label>Search</mat-label>
+    <input #searchInput matInput type="text"  (keyup)="onTitleChange(searchInput.value)">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
