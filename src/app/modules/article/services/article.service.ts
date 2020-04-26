@@ -25,7 +25,7 @@ export class ArticleService {
     if (!this._articlesObject.requested) {
       this._articlesObject.requested = true;
       return this._httpClient.get<Article[]>(this._articleBaseApi).pipe(
-        tap(articles => this._articlesObject.articles$.next(articles)))
+        tap(articles => this._articlesObject.articles$.next(this._articlesWithUrl(articles))))
     }
     return this._articlesObject.articles$;
   }
@@ -40,5 +40,9 @@ export class ArticleService {
         map(articles => articles.filter(art => art.title.toUpperCase().includes(filter.toUpperCase())))
       ))
     );
+  }
+
+  private _articlesWithUrl(articles: Article[]) {
+    return articles.filter(article => article.url !== null);
   }
 }
