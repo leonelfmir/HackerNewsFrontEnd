@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class HttpInterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  constructor(private _snackBar: MatSnackBar) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req)
@@ -17,9 +18,9 @@ export class HttpInterceptorService implements HttpInterceptor {
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
-            errorMessage = `Error: ${error.error.message}`;
+            errorMessage = `Error: ${error.message}`;
           } else {
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.error.message}`;
+            errorMessage = error.message;
           }
           this.showAlert(errorMessage);
           return throwError(errorMessage);
@@ -28,6 +29,6 @@ export class HttpInterceptorService implements HttpInterceptor {
   }
 
   showAlert(message: string) {
-    window.alert(message);
+    this._snackBar.open(message, 'OK', {verticalPosition: 'top'});
   }
 }
