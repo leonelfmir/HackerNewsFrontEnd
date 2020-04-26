@@ -8,13 +8,13 @@ import { take, filter } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class ArticlesResolver implements Resolve<Article> {
+export class ArticlesResolver implements Resolve<Article[]> {
 
   constructor(private _articleService: ArticleService) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Article | Observable<Article> | Promise<Article> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Article[] | Observable<Article[]> | Promise<Article[]> {
     return this._articleService.getArticles().pipe(
-      filter(a => a!=null),
+      filter(a => a != null),
       take(1)
       );
   }

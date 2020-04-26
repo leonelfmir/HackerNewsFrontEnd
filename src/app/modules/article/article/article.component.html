@@ -1,5 +1,9 @@
 <h3 class="mb-0">
-    <a [attr.href]="article.url">{{article.title}}</a>
+    
+    <a [attr.href]="article.url" target="_blank">
+        <span *ngIf="article.url === null">(NO LINK)</span>
+        {{article.title}}
+    </a>
 </h3>
 <span class="d-flex pl-2">
     <div class="pr-1">

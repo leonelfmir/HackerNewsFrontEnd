@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Article } from './article.model';
-import { tap } from 'rxjs/operators';
+import { tap, filter, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class ArticleService {
 
   private _articlesObject = {
     requested: false,
-    articles$: new BehaviorSubject(null)
+    articles$: new BehaviorSubject<Article[]>(null)
   };
 
   constructor(private _httpClient: HttpClient) { }
@@ -27,5 +27,11 @@ export class ArticleService {
         .subscribe();
     }
     return this._articlesObject.articles$;
+  }
+
+  getArticlesFiltered(searchText: string = ""){
+    return this._articlesObject.articles$.pipe(
+      map(articles => articles.filter(art => art.title.includes(searchText)))
+    );
   }
 }

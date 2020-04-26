@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Article } from '../services/article.model';
-import { ActivatedRoute } from '@angular/router';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-news-page-smart',
@@ -8,15 +9,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./news-page-smart.component.scss']
 })
 export class NewsPageSmartComponent implements OnInit {
-  articles: Article[];
+  articles$: Observable<Article[]>;
 
-  constructor(private _activatedRoute: ActivatedRoute) {
-    this._activatedRoute.data.subscribe(({ articles }) => {
-      this.articles = articles;
-    })
+  constructor(private _articleService: ArticleService) {
+    // this._activatedRoute.data.subscribe(({ articles }) => {
+    //   this.articles = articles;
+    // })
   }
 
   ngOnInit(): void {
+    this.articles$ = this._articleService.getArticlesFiltered();
   }
 
 }
