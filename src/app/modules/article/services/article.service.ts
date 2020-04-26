@@ -37,7 +37,12 @@ export class ArticleService {
   getArticlesFiltered() {
     return this._filter$.pipe(
       switchMap(filter => this._articlesObject.articles$.pipe(
-        map(articles => articles.filter(art => art.title.toUpperCase().includes(filter.toUpperCase())))
+        map(articles => {
+          if (articles === null) {
+            return [];
+          }
+          return articles.filter(art => art.title.toUpperCase().includes(filter.toUpperCase()));
+        })
       ))
     );
   }
