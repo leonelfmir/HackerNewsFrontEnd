@@ -3,6 +3,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Article } from './article.model';
 import { Observable } from 'rxjs';
 import { ArticleService } from './article.service';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,6 @@ export class ArticlesResolver implements Resolve<Article> {
   constructor(private _articleService: ArticleService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Article | Observable<Article> | Promise<Article> {
-    return this._articleService.getArticles();
+    return this._articleService.getArticles().pipe(take(1));
   }
 }
