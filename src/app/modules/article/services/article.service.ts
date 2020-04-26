@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Article } from './article.model';
-import { tap, filter, map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +24,8 @@ export class ArticleService {
   getArticles() {
     if (!this._articlesObject.requested) {
       this._articlesObject.requested = true;
-      this._httpClient.get<Article[]>(this._articleBaseApi).pipe(
+      return this._httpClient.get<Article[]>(this._articleBaseApi).pipe(
         tap(articles => this._articlesObject.articles$.next(articles)))
-        .subscribe();
     }
     return this._articlesObject.articles$;
   }
@@ -38,7 +37,7 @@ export class ArticleService {
   getArticlesFiltered() {
     return this._filter$.pipe(
       switchMap(filter => this._articlesObject.articles$.pipe(
-        map(articles => articles.filter(art => art.title.includes(filter)))
+        map(articles => articles.filter(art => art.title.toUpperCase().includes(filter.toUpperCase())))
       ))
     );
   }
