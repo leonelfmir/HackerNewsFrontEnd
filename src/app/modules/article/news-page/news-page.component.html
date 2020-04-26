@@ -1,1 +1,8 @@
-<p>news-page works!</p>
+<div>
+    <div *ngFor="let article of articles" class="pt-2">
+        <app-article [article]="article"></app-article>
+        <div class="pt-3">
+            <mat-divider></mat-divider>
+        </div>
+    </div>
+</div>

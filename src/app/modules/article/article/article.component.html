@@ -1,1 +1,12 @@
-<p>article works!</p>
+<h3 class="mb-0">
+    <a [attr.href]="article.url">{{article.title}}</a>
+</h3>
+<span class="d-flex pl-2">
+    <div class="pr-1">
+        BY: {{article.author | uppercase}}
+    </div>
+    |
+    <div class="pl-1">
+        {{article.time | date | uppercase}}
+    </div>
+</span>
