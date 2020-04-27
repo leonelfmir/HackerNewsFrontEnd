@@ -16,6 +16,12 @@ describe('ArticleComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ArticleComponent);
     component = fixture.componentInstance;
+    component.article = {
+      author: 'auhtor',
+      title: 'title',
+      time: new Date(),
+      url: 'url.com'
+    }
     fixture.detectChanges();
   });
 

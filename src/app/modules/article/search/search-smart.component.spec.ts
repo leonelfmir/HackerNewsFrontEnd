@@ -1,14 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchSmartComponent } from './search-smart.component';
+import { ArticleService } from '../services/article.service';
 
 describe('SearchSmartComponent', () => {
   let component: SearchSmartComponent;
   let fixture: ComponentFixture<SearchSmartComponent>;
 
   beforeEach(async(() => {
+    const spy = jasmine.createSpyObj('ArticleService', ['filterArticles']);
+
     TestBed.configureTestingModule({
-      declarations: [ SearchSmartComponent ]
+      declarations: [ SearchSmartComponent ],
+      providers: [ {provide: ArticleService, useValue: spy}]
     })
     .compileComponents();
   }));
